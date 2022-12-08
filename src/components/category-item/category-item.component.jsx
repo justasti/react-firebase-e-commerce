@@ -14,7 +14,7 @@ const CategoryItem = ({ category }) => {
       />
       <div className='category-body-container'>
         <h2>{title}</h2>
-        <p>Show now</p>
+        <p>Shop now</p>
       </div>
     </div>
   );
