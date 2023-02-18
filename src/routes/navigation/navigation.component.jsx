@@ -1,29 +1,46 @@
-import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
+import { UserContext } from '../../context/user.context'
+import { CartContext } from '../../context/cart.context'
+import { signUserOut } from '../../utils/firebase/firebase.utils'
+import CartIcon from '../../components/cart-icon/cart-icon.component'
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
 
-import './navigation.styles.scss';
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLink,
+  NavLinksContainer,
+} from './navigation.styles'
 
-const Navigation = (props) => {
+const Navigation = () => {
+  const { currentUser } = useContext(UserContext)
+  const { cartOpen } = useContext(CartContext)
+
   return (
     <>
-      <div className='navigation'>
-        <Link className='logo-container' to='/'>
+      <NavigationContainer>
+        <LogoContainer to='/'>
           <CrwnLogo className='logo' />
-        </Link>
-        <div className='nav-links-container'>
-          <Link className='nav-link' to='/shop'>
-            SHOP
-          </Link>
-          <Link className='nav-link' to='/login'>
-            SIGN IN
-          </Link>
-        </div>
-      </div>
+        </LogoContainer>
+        <NavLinksContainer>
+          <NavLink to='/shop'>SHOP</NavLink>
+          {currentUser ? (
+            <NavLink as='span' onClick={signUserOut}>
+              SIGN OUT
+            </NavLink>
+          ) : (
+            <NavLink to='/login'>SIGN IN</NavLink>
+          )}
+          <CartIcon />
+        </NavLinksContainer>
+        {cartOpen && <CartDropdown />}
+      </NavigationContainer>
       <Outlet />
     </>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation
