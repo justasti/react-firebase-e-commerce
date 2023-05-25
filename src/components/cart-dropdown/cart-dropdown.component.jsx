@@ -6,18 +6,19 @@ import {
 
 import Button from '../button/button.component'
 import CartItem from '../cart-item/cart-item.component'
-import { useContext } from 'react'
-import { CartContext } from '../../context/cart.context'
 import { useNavigate } from 'react-router'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectCartItems } from '../../store/cart/cart.selector.js'
+import { setCartOpen } from '../../store/cart/cart.action.js'
 
 const CartDropdown = () => {
-  const { cartItems } = useContext(CartContext)
   const navigate = useNavigate()
-  const { setCartOpen } = useContext(CartContext)
+  const cartItems = useSelector(selectCartItems)
+  const dispatch = useDispatch()
 
   const checkout = () => {
     navigate('/checkout')
-    setCartOpen(false)
+    dispatch(setCartOpen(false))
   }
   return (
     <CartDropdownContainer>
