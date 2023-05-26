@@ -30,8 +30,8 @@ const clearCartItem = (cartItems, cartItemToClear) => {
 }
 
 // 
-
 export const setCartOpen = bool => createAction(CART_ACTION_TYPES.SET_CART_OPEN, bool)
+
 
 export const addItemToCart = (cartItems, product) => {
   const newCartItems = addCartItem(cartItems, product)
