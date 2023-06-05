@@ -1,45 +1,49 @@
+import { Fragment } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
 import CartIcon from '../../components/cart-icon/cart-icon.component'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
 
+import { selectCurrentUser } from '../../store/user/user.selector'
+import { selectIsCartOpen } from '../../store/cart/cart.selector'
+
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
+import { signOutUser } from '../../utils/firebase/firebase.utils'
+
 import {
   NavigationContainer,
-  LogoContainer,
   NavLink,
+  LogoContainer,
   NavLinksContainer,
 } from './navigation.styles'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectCurrentUser } from '../../store/user/user.selector'
-import { selectCartOpen } from '../../store/cart/cart.selector'
-import { signOutStart } from '../../store/user/user.action'
 
 const Navigation = () => {
-  const dispatch = useDispatch()
-  const cartOpen = useSelector(selectCartOpen)
-  const currentUser = useSelector((state) => selectCurrentUser(state))
+  const currentUser = useSelector(selectCurrentUser)
+  const isCartOpen = useSelector(selectIsCartOpen)
+
   return (
-    <>
+    <Fragment>
       <NavigationContainer>
         <LogoContainer to='/'>
           <CrwnLogo className='logo' />
         </LogoContainer>
         <NavLinksContainer>
           <NavLink to='/shop'>SHOP</NavLink>
+
           {currentUser ? (
-            <NavLink as='span' onClick={() => dispatch(signOutStart())}>
+            <NavLink as='span' onClick={signOutUser}>
               SIGN OUT
             </NavLink>
           ) : (
-            <NavLink to='/login'>SIGN IN</NavLink>
+            <NavLink to='/auth'>SIGN IN</NavLink>
           )}
           <CartIcon />
         </NavLinksContainer>
-        {cartOpen && <CartDropdown />}
+        {isCartOpen && <CartDropdown />}
       </NavigationContainer>
       <Outlet />
-    </>
+    </Fragment>
   )
 }
 
