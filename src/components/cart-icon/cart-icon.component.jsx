@@ -1,4 +1,4 @@
-import { setIsCartOpen } from '../../store/cart/cart.action'
+import { setIsCartOpen } from '../../store/cart/cart.reducer'
 import {
   selectCartCount,
   selectIsCartOpen,
