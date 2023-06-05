@@ -56,14 +56,17 @@ const cartSlice = createSlice({
     clearItemFromCart: (state, action) => {
       state.cartItems = clearCartItem(state.cartItems, action.payload)
     },
+    emptyCart: (state) => {
+      state.cartItems = []
+    },
     setCartItems: (state, action) => {
       state.cartItems = action.payload
     },
-    setIsCartOpen: (state) => {
-      state.isCartOpen = !state.isCartOpen
+    setIsCartOpen: (state, action) => {
+      state.isCartOpen = action.payload
     }
   }
 })
 
 export const cartReducer = cartSlice.reducer
-export const { addItemToCart, removeItemFromCart, clearItemFromCart, setCartItems, setIsCartOpen } = cartSlice.actions
+export const { addItemToCart, removeItemFromCart, clearItemFromCart, setCartItems, setIsCartOpen, emptyCart } = cartSlice.actions
