@@ -28,7 +28,7 @@ const Category = () => {
         <Spinner />
       ) : (
         <CategoryContainer>
-          {products.map((product) => (
+          {products?.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </CategoryContainer>
