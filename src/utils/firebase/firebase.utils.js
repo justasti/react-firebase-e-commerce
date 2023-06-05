@@ -64,13 +64,6 @@ export const getCategoriesAndDocuments = async () => {
 
   const querySnapshot = await getDocs(q)
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data())
-
-  // .reduce((acc, docSnapshot) => {
-  //   const { title, items } = docSnapshot.data()
-  //   acc[title.toLowerCase()] = items
-
-  //   return acc
-  // }, {})
 }
 
 export const createUserDocumentFromAuth = async (
@@ -98,8 +91,7 @@ export const createUserDocumentFromAuth = async (
       console.log(err.message)
     }
   }
-
-  return userDocRef
+  return userSnapshot
 }
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
