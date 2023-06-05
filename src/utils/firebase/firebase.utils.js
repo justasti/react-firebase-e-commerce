@@ -29,7 +29,7 @@ const firebaseConfig = {
   appId: '1:1007612238708:web:0901ca7207a0f023b66a21',
 }
 
-const app = initializeApp(firebaseConfig)
+const firebaseApp = initializeApp(firebaseConfig)
 const googleProvider = new GoogleAuthProvider()
 googleProvider.setCustomParameters({
   prompt: 'select_account',
@@ -44,7 +44,8 @@ export const db = getFirestore()
 
 export const addCollectionAndDocuments = async (
   collectionKey,
-  objectsToAdd
+  objectsToAdd,
+  field
 ) => {
   const collectionRef = collection(db, collectionKey)
   const batch = writeBatch(db)
@@ -71,7 +72,6 @@ export const createUserDocumentFromAuth = async (
   additionalInformation = {}
 ) => {
   if (!userAuth) return
-
   const userDocRef = doc(db, 'users', userAuth.uid)
   const userSnapshot = await getDoc(userDocRef)
 
@@ -96,14 +96,7 @@ export const createUserDocumentFromAuth = async (
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return
-
   return await createUserWithEmailAndPassword(auth, email, password)
-}
-
-export const signInWithCredentials = async (email, password) => {
-  if (!email || !password) return
-
-  return await signInWithEmailAndPassword(auth, email, password)
 }
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
@@ -112,14 +105,7 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   return await signInWithEmailAndPassword(auth, email, password)
 }
 
-export const signUserOut = async () => {
-  await signOut(auth)
-}
-
-export const onAuthStateChangedListener = (cb) => {
-  if (!cb) return
-  onAuthStateChanged(auth, cb)
-}
+export const signUserOut = async () => await signOut(auth)
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {

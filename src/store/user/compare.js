@@ -1,42 +1,130 @@
-import { USER_ACTION_TYPES } from './user.types';
-import { createAction } from '../../utils/reducer/reducer.utils';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from 'firebase/firestore';
 
-export const setCurrentUser = (user) =>
-  createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user);
+const firebaseConfig = {
+  apiKey: 'AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk',
+  authDomain: 'crwn-clothing-db-98d4d.firebaseapp.com',
+  projectId: 'crwn-clothing-db-98d4d',
+  storageBucket: 'crwn-clothing-db-98d4d.appspot.com',
+  messagingSenderId: '626766232035',
+  appId: '1:626766232035:web:506621582dab103a4d08d6',
+};
 
-export const checkUserSession = () =>
-  createAction(USER_ACTION_TYPES.CHECK_USER_SESSION);
+const firebaseApp = initializeApp(firebaseConfig);
 
-export const googleSignInStart = () =>
-  createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START);
+const googleProvider = new GoogleAuthProvider();
 
-export const emailSignInStart = (email, password) =>
-  createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password });
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
+});
 
-export const signInSuccess = (user) =>
-  createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user);
+export const auth = getAuth();
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 
-export const signInFailed = (error) =>
-  createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error);
+export const db = getFirestore();
 
-export const signUpStart = (email, password, displayName) =>
-  createAction(USER_ACTION_TYPES.SIGN_UP_START, {
-    email,
-    password,
-    displayName,
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  field
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
   });
 
-export const signUpSuccess = (user, additionalDetails) =>
-  createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails });
+  await batch.commit();
+  console.log('done');
+};
 
-export const signUpFailed = (error) =>
-  createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, error);
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
 
-export const signOutStart = () =>
-  createAction(USER_ACTION_TYPES.SIGN_OUT_START);
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+};
 
-export const signOutSuccess = () =>
-  createAction(USER_ACTION_TYPES.SIGN_OUT_SUCCESS);
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation = {}
+) => {
+  if (!userAuth) return;
 
-export const signOutFailed = (error) =>
-  createAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, error);
+  const userDocRef = doc(db, 'users', userAuth.uid);
+
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalInformation,
+      });
+    } catch (error) {
+      console.log('error creating the user', error.message);
+    }
+  }
+
+  return userSnapshot;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
+};
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
