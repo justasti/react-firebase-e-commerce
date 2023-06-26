@@ -11,9 +11,9 @@ import {
   NavLinksContainer,
 } from './navigation.styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCurrentUser } from '../../store/user/user.selector'
-import { selectCartOpen } from '../../store/cart/cart.selector'
-import { signOutStart } from '../../store/user/user.action'
+import { selectCurrentUser } from '../../store/user/user.selector.ts'
+import { selectCartOpen } from '../../store/cart/cart.selector.ts'
+import { signOutStart } from '../../store/user/user.action.ts'
 
 const Navigation = () => {
   const dispatch = useDispatch()

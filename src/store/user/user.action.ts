@@ -1,14 +1,15 @@
+import { User } from 'firebase/auth'
 import {
   AdditionalInformation,
   UserData,
-} from '../../utils/firebase/firebase.utils'
+} from '../../utils/firebase/firebase.utils.ts'
 import {
   Action,
   ActionWithPayload,
   createAction,
   withMatcher,
-} from '../../utils/reducer/reducer.utils'
-import { USER_ACTION_TYPES } from './user.types'
+} from '../../utils/reducer/reducer.utils.ts'
+import { USER_ACTION_TYPES } from './user.types.ts'
 
 export type CheckUserSession = Action<USER_ACTION_TYPES.CHECK_USER_SESSION>
 export const checkUserSession = withMatcher(
@@ -43,7 +44,7 @@ export type SignInSuccess = ActionWithPayload<
   UserData
 >
 export const signInSuccess = withMatcher(
-  (user: UserData): SignInSuccess =>
+  (user: UserData & { id: string }): SignInSuccess =>
     createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user)
 )
 
@@ -71,10 +72,10 @@ export const signUpStart = withMatcher(
 
 export type SignUpSuccess = ActionWithPayload<
   USER_ACTION_TYPES.SIGN_UP_SUCCESS,
-  { user: UserData; additionalDetails: AdditionalInformation }
+  { user: User; additionalDetails: AdditionalInformation }
 >
 export const signUpSuccess = withMatcher(
-  (user: UserData, additionalDetails: AdditionalInformation): SignUpSuccess =>
+  (user: User, additionalDetails: AdditionalInformation): SignUpSuccess =>
     createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails })
 )
 

@@ -6,7 +6,7 @@ import ProductCard from '../../components/product-card/product-card.component'
 import {
   selectCategoriesLoading,
   selectCategoriesMap,
-} from '../../store/categories/category.selector'
+} from '../../store/categories/category.selector.ts'
 
 import { CategoryContainer, Title } from './category.styles'
 import Spinner from './../../components/spinner/spinner.component'

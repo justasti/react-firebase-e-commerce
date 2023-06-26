@@ -6,8 +6,8 @@ import {
   Name,
   Price,
 } from './product-card.styles'
-import { addItemToCart } from '../../store/cart/cart.action'
-import { selectCartItems } from '../../store/cart/cart.selector'
+import { addItemToCart } from '../../store/cart/cart.action.ts'
+import { selectCartItems } from '../../store/cart/cart.selector.ts'
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()

@@ -7,10 +7,10 @@ import {
 import logger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 
-import { rootReducer } from './root-reducer'
+import { rootReducer } from './root-reducer.ts'
 import { persistStore, persistReducer, PersistConfig } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { rootSaga } from './root-saga'
+import { rootSaga } from './root-saga.ts'
 
 export type RootState = ReturnType<typeof rootReducer>
 

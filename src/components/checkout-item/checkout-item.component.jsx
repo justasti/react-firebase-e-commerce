@@ -11,8 +11,8 @@ import {
   addItemToCart,
   clearItemFromCart,
   removeItemFromCart,
-} from '../../store/cart/cart.action'
-import { selectCartItems } from '../../store/cart/cart.selector'
+} from '../../store/cart/cart.action.ts'
+import { selectCartItems } from '../../store/cart/cart.selector.ts'
 
 const CheckoutItem = ({ cartItem }) => {
   const dispatch = useDispatch()

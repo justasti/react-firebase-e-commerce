@@ -3,7 +3,7 @@ import CategoryPreview from '../../components/category-preview/category-preview.
 import {
   selectCategoriesLoading,
   selectCategoriesMap,
-} from '../../store/categories/category.selector'
+} from '../../store/categories/category.selector.ts'
 import Spinner from '../../components/spinner/spinner.component'
 
 const CategoriesPreview = () => {
