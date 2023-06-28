@@ -1,12 +1,15 @@
+import { Category } from '../../store/categories/category.types'
 import {
   DirectoryItemContainer,
   BackgroundImage,
   Body,
 } from './directory-item.styles'
 
-import React from 'react'
+type DirectoryItemProps = {
+  category: Category
+}
 
-const DirectoryItem = ({ category }) => {
+const DirectoryItem = ({ category }: DirectoryItemProps) => {
   const { imageUrl, title } = category
   return (
     <DirectoryItemContainer to={`shop/${title}`}>

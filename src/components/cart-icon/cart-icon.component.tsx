@@ -3,8 +3,11 @@ import {
   selectCartCount,
   selectCartOpen,
 } from '../../store/cart/cart.selector.ts'
-import { CartIconContainer, CartItemCount } from './cart-icon.styles'
-import { ShoppingIcon } from './cart-icon.styles'
+import {
+  CartIconContainer,
+  CartItemCount,
+  ShoppingIcon,
+} from './cart-icon.styles.tsx'
 import { useDispatch, useSelector } from 'react-redux'
 
 const CartIcon = () => {

@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom'
 
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
-import CartIcon from '../../components/cart-icon/cart-icon.component'
-import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
+import CartIcon from '../../components/cart-icon/cart-icon.component.tsx'
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component.jsx'
 
 import {
   NavigationContainer,
   LogoContainer,
   NavLink,
   NavLinksContainer,
-} from './navigation.styles'
+} from './navigation.styles.tsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../store/user/user.selector.ts'
 import { selectCartOpen } from '../../store/cart/cart.selector.ts'
@@ -18,7 +18,7 @@ import { signOutStart } from '../../store/user/user.action.ts'
 const Navigation = () => {
   const dispatch = useDispatch()
   const cartOpen = useSelector(selectCartOpen)
-  const currentUser = useSelector((state) => selectCurrentUser(state))
+  const currentUser = useSelector(selectCurrentUser)
   return (
     <>
       <NavigationContainer>

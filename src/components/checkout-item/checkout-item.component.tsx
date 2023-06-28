@@ -6,15 +6,20 @@ import {
   Price,
   RemoveButton,
   Quantity,
-} from './checkout-item.styles'
+} from './checkout-item.styles.jsx'
 import {
   addItemToCart,
   clearItemFromCart,
   removeItemFromCart,
 } from '../../store/cart/cart.action.ts'
 import { selectCartItems } from '../../store/cart/cart.selector.ts'
+import { CartItem } from '../../store/cart/cart.types.ts'
 
-const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+  cartItem: CartItem
+}
+
+const CheckoutItem = ({ cartItem }: CheckoutItemProps) => {
   const dispatch = useDispatch()
   const { name, imageUrl, price, quantity } = cartItem
   const cartItems = useSelector(selectCartItems)
