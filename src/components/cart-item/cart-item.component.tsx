@@ -5,7 +5,7 @@ type CartItemProps = {
   cartItem: CartItem
 }
 
-const CartItem = ({ cartItem }: CartItemProps) => {
+const CartItemComponent = ({ cartItem }: CartItemProps) => {
   const { name, imageUrl, price, quantity } = cartItem
   return (
     <CartItemContainer>
@@ -20,4 +20,4 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   )
 }
 
-export default CartItem
+export default CartItemComponent

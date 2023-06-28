@@ -6,7 +6,7 @@ import {
   Price,
   RemoveButton,
   Quantity,
-} from './checkout-item.styles.jsx'
+} from './checkout-item.styles'
 import {
   addItemToCart,
   clearItemFromCart,

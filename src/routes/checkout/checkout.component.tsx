@@ -1,4 +1,4 @@
-import CheckoutItem from '../../components/checkout-item/checkout-item.component'
+import CheckoutItem from '../../components/checkout-item/checkout-item.component.tsx'
 import { useSelector } from 'react-redux'
 import {
   selectCartItems,

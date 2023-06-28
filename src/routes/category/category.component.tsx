@@ -2,14 +2,14 @@ import { useState, useEffect, Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import ProductCard from '../../components/product-card/product-card.component.jsx'
+import ProductCard from '../../components/product-card/product-card.component'
 import {
   selectCategoriesLoading,
   selectCategoriesMap,
 } from '../../store/categories/category.selector.ts'
 
 import { CategoryContainer, Title } from './category.styles.tsx'
-import Spinner from '../../components/spinner/spinner.component.jsx'
+import Spinner from '../../components/spinner/spinner.component'
 
 type CategoryRouteParams = {
   category: string

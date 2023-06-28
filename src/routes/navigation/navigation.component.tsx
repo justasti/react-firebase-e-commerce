@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
 import CartIcon from '../../components/cart-icon/cart-icon.component.tsx'
-import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component.jsx'
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
 
 import {
   NavigationContainer,

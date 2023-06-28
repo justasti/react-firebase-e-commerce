@@ -5,7 +5,7 @@ import {
   Footer,
   Name,
   Price,
-} from './product-card.styles.jsx'
+} from './product-card.styles'
 import { addItemToCart } from '../../store/cart/cart.action.ts'
 import { selectCartItems } from '../../store/cart/cart.selector.ts'
 import { CategoryItem } from '../../store/categories/category.types.ts'

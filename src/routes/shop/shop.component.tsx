@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router'
-import CategoriesPreview from '../categories-preview/categories-preview.component'
-import Category from '../category/category.component'
+import CategoriesPreview from '../categories-preview/categories-preview.component.tsx'
+import Category from '../category/category.component.tsx'
 import { fetchCategoriesStart } from '../../store/categories/category.action.ts'
 
 import './shop.styles.scss'
